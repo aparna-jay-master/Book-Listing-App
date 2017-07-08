@@ -72,9 +72,13 @@ public class MainActivity extends AppCompatActivity
                 String adjustedQuery = textQuery.replace(" ", "+");
                 GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes?q=" + adjustedQuery;
 
-                //configure loader manager
-                LoaderManager loaderManager = getLoaderManager();
-                loaderManager.restartLoader(1, null, MainActivity.this);
+                if (checkConnectivity()) {
+                    //configure loader manager
+                    LoaderManager loaderManager = getLoaderManager();
+                    loaderManager.restartLoader(1, null, MainActivity.this);
+                } else {
+                    mEmptyStateTextView.setText(R.string.no_internet_connection);
+                }
 
             }
         });
@@ -141,5 +145,36 @@ public class MainActivity extends AppCompatActivity
     public void onLoaderReset(Loader<List<Book>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
+    }
+
+    public boolean checkConnectivity() {
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        // If there is a network connection, fetch data
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Get a reference to the LoaderManager, in order to interact with loaders.
+            LoaderManager loaderManager = getLoaderManager();
+
+            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+            // because this activity implements the LoaderCallbacks interface).
+            loaderManager.initLoader(BOOK_LOADER_ID, null, this);
+            return true;
+        } else {
+            // Otherwise, display error
+            // First, hide loading indicator and list so error message will be visible
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.GONE);
+            View list = findViewById((R.id.list));
+            list.setVisibility(View.GONE);
+            //make list visible
+            mEmptyStateTextView.setVisibility(View.VISIBLE);
+            return false;
+        }
     }
 }
