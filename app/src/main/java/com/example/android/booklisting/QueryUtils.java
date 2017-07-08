@@ -183,7 +183,7 @@ public final class QueryUtils {
                         authors = authors.concat(authorList.getString(b) + ", ");
                     }
                 } else {
-                    authors = "Unknown";
+                    authors = "Unknown  ";
                 }
 
                 // Create a new {@link Book} object with the title and authors
