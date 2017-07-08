@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
                 EditText editTextView = (EditText) findViewById(R.id.edit_text_view);
                 String textQuery = editTextView.getText().toString();
                 String adjustedQuery = textQuery.replace(" ", "+");
-                GOOGLE_BOOKS_API = GOOGLE_BOOKS_API + adjustedQuery;
+                GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes?q=" + adjustedQuery;
 
                 //configure loader manager
                 LoaderManager loaderManager = getLoaderManager();
