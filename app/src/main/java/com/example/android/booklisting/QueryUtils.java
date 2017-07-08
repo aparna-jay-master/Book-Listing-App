@@ -173,7 +173,6 @@ public final class QueryUtils {
                 String title = volumeInfo.getString("title");
 
                 // Get all authors
-                // TODO: figure out authors
                 String authors = volumeInfo.getString("authors");
 
                 // Create a new {@link Book} object with the title and authors

@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity
         //Find button
         Button button = (Button) findViewById(R.id.button_view);
 
-
         //Click listener
         button.setOnClickListener(new View.OnClickListener() {
             @Override
