@@ -28,7 +28,7 @@ public class Book {
     }
 
     //Returns authors
-    public String getmAuthors () {
+    public String getAuthors () {
         return mAuthors;
     }
 }
