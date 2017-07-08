@@ -64,10 +64,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
     }
 
     private String createAuthorsText(String authorTogether) {
-        authorTogether = authorTogether.replace("[", "");
-        authorTogether = authorTogether.replace("]", "");
-        authorTogether = authorTogether.replace("\"", "");
-        authorTogether = authorTogether.replace(",", ", ");
-        return authorTogether;
+        String newAuthors = authorTogether.substring(0, authorTogether.length()-2);
+        return newAuthors;
     }
 }

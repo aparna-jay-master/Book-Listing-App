@@ -18,6 +18,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.author;
+import static android.R.attr.x;
+
 /**
  * Helper methods related to requesting and receiving books data from Google Books API.
  */
@@ -173,7 +176,15 @@ public final class QueryUtils {
                 String title = volumeInfo.getString("title");
 
                 // Get all authors
-                String authors = volumeInfo.getString("authors");
+                String authors = "";
+                if (volumeInfo.has("authors")) {
+                    JSONArray authorList = volumeInfo.getJSONArray("authors");
+                    for (int b = 0; b < authorList.length(); b++) {
+                        authors = authors.concat(authorList.getString(b) + ", ");
+                    }
+                } else {
+                    authors = "Unknown";
+                }
 
                 // Create a new {@link Book} object with the title and authors
                 Book book = new Book(title, authors);
@@ -186,10 +197,10 @@ public final class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the book JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of books
         return books;
     }
 }
