@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     private static final String LOG_TAG = MainActivity.class.getName();
 
     /** URL for book data from the Google API */
-    private static final String GOOGLE_BOOKS_API =
+    private String GOOGLE_BOOKS_API =
             "https://www.googleapis.com/books/v1/volumes?q=android&maxResults=5";
 
     /**
