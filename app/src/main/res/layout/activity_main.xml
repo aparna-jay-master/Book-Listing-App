@@ -7,10 +7,16 @@
     android:orientation="vertical"
     tools:context="com.example.android.booklisting.MainActivity">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:id="@+id/edit_text_view"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TEST"
+        android:text="Search"
         android:id="@+id/button_view"/>
 
     <RelativeLayout

@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.bluetooth.BluetoothAssignedNumbers.GOOGLE;
+
 public class MainActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Book>> {
 
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     /** URL for book data from the Google API */
     private String GOOGLE_BOOKS_API =
-            "https://www.googleapis.com/books/v1/volumes?q=android&maxResults=5";
+            "https://www.googleapis.com/books/v1/volumes?q=";
 
     /**
      * Constant value for the book loader ID.
@@ -86,6 +89,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
+        String searchQuery = "magic";
+        if (searchQuery.length()>0){
+            searchQuery = searchQuery.replace(" ", "+");
+        }
+        GOOGLE_BOOKS_API = GOOGLE_BOOKS_API + searchQuery;
         return new BookLoader(this, GOOGLE_BOOKS_API);
     }
 
