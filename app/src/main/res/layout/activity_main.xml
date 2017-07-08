@@ -7,10 +7,10 @@
     tools:context="com.example.android.booklisting.MainActivity">
 
     <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 
     <!--Empty View if needed-->
     <TextView
