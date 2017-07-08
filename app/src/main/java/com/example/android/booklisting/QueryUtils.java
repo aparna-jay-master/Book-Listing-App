@@ -172,12 +172,10 @@ public final class QueryUtils {
 
                 // Get all authors
                 // TODO: figure out authors
-                //String location = properties.getString("place");
+                String authors = volumeInfo.getString("authors");
 
                 // Create a new {@link Book} object with the title and authors
-                // TODO: add authors and reomove string
-                String authorHold = "author hold";
-                Book book = new Book(title, authorHold);
+                Book book = new Book(title, authors);
 
                 // Add the new {@link Book} to the list of books.
                 books.add(book);

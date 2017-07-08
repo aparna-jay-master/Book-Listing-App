@@ -54,9 +54,15 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         //Find author view for title
         TextView authorView = (TextView) listItemView.findViewById(R.id.author_text_view);
+        //Get adjusted authors String
+        String allAuthors = createAuthorsText(currentBook.getAuthors());
         //Display title
-        authorView.setText(currentBook.getAuthors());
+        authorView.setText(allAuthors);
 
         return listItemView;
+    }
+
+    private String createAuthorsText(String authorTogether) {
+        return authorTogether;
     }
 }
