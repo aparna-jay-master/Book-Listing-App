@@ -8,13 +8,17 @@ import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +29,23 @@ public class MainActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Book>> {
 
     private static final String LOG_TAG = MainActivity.class.getName();
-
-    /** URL for book data from the Google API */
-    private String GOOGLE_BOOKS_API =
-            "https://www.googleapis.com/books/v1/volumes?q=";
-
     /**
      * Constant value for the book loader ID.
      */
     private static final int BOOK_LOADER_ID = 1;
-
-    /** Adapter for the list of books */
+    /**
+     * URL for book data from the Google API
+     */
+    private String GOOGLE_BOOKS_API =
+            "https://www.googleapis.com/books/v1/volumes?q=";
+    /**
+     * Adapter for the list of books
+     */
     private BookAdapter mAdapter;
 
-    /** TextView that is displayed when the list is empty */
+    /**
+     * TextView that is displayed when the list is empty
+     */
     private TextView mEmptyStateTextView;
 
     @Override
@@ -52,7 +59,28 @@ public class MainActivity extends AppCompatActivity
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         bookListView.setEmptyView(mEmptyStateTextView);
 
-        // Create a new adapter that takes an empty list of earthquakes as input
+        //Find button
+        Button button = (Button) findViewById(R.id.button_view);
+
+
+        //Click listener
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Find search text and create variable
+                EditText editTextView = (EditText) findViewById(R.id.edit_text_view);
+                String textQuery = editTextView.getText().toString();
+                String adjustedQuery = textQuery.replace(" ", "+");
+                GOOGLE_BOOKS_API = GOOGLE_BOOKS_API + adjustedQuery;
+
+                //configure loader manager
+                LoaderManager loaderManager = getLoaderManager();
+                loaderManager.restartLoader(1, null, MainActivity.this);
+
+            }
+        });
+
+        // Create a new adapter that takes an empty list of books as input
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
 
         // Set the adapter on the {@link ListView}
@@ -88,18 +116,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-        // Create a new loader for the given URL
-        String searchQuery = "magic";
-        if (searchQuery.length()>0){
-            searchQuery = searchQuery.replace(" ", "+");
-        }
-        GOOGLE_BOOKS_API = GOOGLE_BOOKS_API + searchQuery;
         return new BookLoader(this, GOOGLE_BOOKS_API);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> books) {
-    // Hide loading indicator because the data has been loaded
+        // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 

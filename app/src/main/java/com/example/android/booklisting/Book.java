@@ -14,21 +14,22 @@ public class Book {
 
     /**
      * Constructs a new {@link Book} object
-     * @param title is the title of the book
+     *
+     * @param title   is the title of the book
      * @param authors is/are the author(s) of the book
      */
-    public Book (String title, String authors){
+    public Book(String title, String authors) {
         mTitle = title;
         mAuthors = authors;
     }
 
     //Returns title
-    public String getTitle () {
+    public String getTitle() {
         return mTitle;
     }
 
     //Returns authors
-    public String getAuthors () {
+    public String getAuthors() {
         return mAuthors;
     }
 }
